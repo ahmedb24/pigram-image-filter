@@ -13,26 +13,27 @@ const getKey = (key: string): boolean => {
     return keys.indexOf(`${key}`) < 0 ? false : true;
 }
 
+
 export const authenticate = (req: Request, res: Response, next: NextFunction) => {
     if (!req.headers || !req.headers.authorization){
         return res.status(401).send({ auth: 'false', message: 'invalid authorization header.' });
     }
     
     const authorization = req.headers.authorization.split(' ');
-    if(authorization.length != 2){
-        return res.status(401).send({ auth: 'false', message: 'invalid token.' });
-    }
+    if(authorization.length != 2) return res.status(401).send({ auth: 'false', message: 'invalid token.' });
     
     const token = authorization[1];
 
     return jwt.verify(token, config.jwt.secret, (err) => {
-      if (err) {
-        return res.status(500).send({ auth: false, message: 'failed to authenticate.' });
-      }
+      if (err) return res.status(500).send({ auth: false, message: 'failed to authenticate.' });
       return next();
     });
 }
 
+/**
+ * Create a JWT token
+ * method: POST
+ */
 router.post('/', (req: Request, res: Response) => {
     const { api_key } = req.body;
     if (!api_key) return res.status(400).send("invalid api key");

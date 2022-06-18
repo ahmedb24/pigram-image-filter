@@ -4,6 +4,11 @@ import { authenticate } from "../../users/routes/auth.router";
 
 const router: Router = Router();
 
+
+/**
+ * Filter an image
+ * Method: GET
+ */
 router.get('/', authenticate, async (req: Request, res: Response) => {
     const { image_url } = req.query;
     const { imageurl } = req.headers;
