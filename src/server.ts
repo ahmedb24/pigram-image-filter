@@ -6,7 +6,7 @@ import { IndexRouter } from './controllers/v0/index.router';
 
   const app = express();
 
-  const port = 8082;
+  const port = 8080;
 
   app.use(bodyParser.json());
 
@@ -14,7 +14,7 @@ import { IndexRouter } from './controllers/v0/index.router';
    * Restricts CORS
    */
   app.use(async (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:8100");
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
   });
